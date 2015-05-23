@@ -18,6 +18,12 @@ public final class ImmutableList<E> {
 	public ImmutableList<E> prepend(E element) {
 		return new ImmutableList<E>(element, this);
 	}
+	
+	public <E2> ImmutableList<E2> transform(Function<? super E, ? extends E2> fn) {
+		return tail == null
+			? new ImmutableList<E2>()
+			: new ImmutableList<E2>(fn.apply(head), tail.transform(fn));
+	}
 
 	@Override
 	public int hashCode() {
@@ -51,27 +57,7 @@ public final class ImmutableList<E> {
 		return true;
 	}
 	
-	public static void main(String args[]){
-		ImmutableList<Integer> list = new ImmutableList<Integer>();
-		ImmutableList<Integer> listPrepend = new ImmutableList<Integer>();
-		System.out.println(list.head);
-		System.out.println(list.tail);
-		System.out.println(listPrepend.head);
-		System.out.println(listPrepend.tail);
-		listPrepend = list.prepend(1);
-		System.out.println(list.head);
-		System.out.println(list.tail);
-		System.out.println(listPrepend.head);
-		System.out.println(listPrepend.tail);
-		listPrepend = list.prepend(2);
-		System.out.println(list.head);
-		System.out.println(list.tail);
-		System.out.println(listPrepend.head);
-		System.out.println(listPrepend.tail);
-		listPrepend = list.prepend(3);
-		System.out.println(list.head);
-		System.out.println(list.tail);
-		System.out.println(listPrepend.head);
-		System.out.println(listPrepend.tail);
-	}
+	
+	
+	
 }
