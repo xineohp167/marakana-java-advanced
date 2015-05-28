@@ -38,9 +38,12 @@ public class Fibonacci {
 		@Override
 		public void run() {
 			while (true) {
-				synchronized (messages) {
+				synchronized (this) {
 					if (messages.isEmpty()) {
-						Thread.yield();
+						try {
+							wait();
+						} catch (InterruptedException e) {
+						}
 					} else {
 						System.out.println(messages.remove());
 					}
@@ -49,8 +52,9 @@ public class Fibonacci {
 		}
 
 		public void log(String message) {
-			synchronized (message) {
+			synchronized (this) {
 				messages.add(message);
+				notify();
 			}
 		}
 
