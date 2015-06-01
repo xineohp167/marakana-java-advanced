@@ -3,23 +3,32 @@ package advanced.calculator.expression;
 import advanced.calculator.Operator;
 
 public class OperationExpression implements Expression {
-
 	private final Expression lhs, rhs;
 	private final Operator op;
+
 	public OperationExpression(Expression lhs, Expression rhs, Operator op) {
 		this.lhs = lhs;
 		this.rhs = rhs;
 		this.op = op;
 	}
+
 	public Expression getLhs() {
 		return lhs;
 	}
+
 	public Expression getRhs() {
 		return rhs;
 	}
+
 	public Operator getOp() {
 		return op;
 	}
+
+	@Override
+	public <A> A accept(ExpressionVisitor<A> visitor) {
+		return visitor.visitOperation(this);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -29,6 +38,7 @@ public class OperationExpression implements Expression {
 		result = prime * result + ((rhs == null) ? 0 : rhs.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -52,19 +62,4 @@ public class OperationExpression implements Expression {
 			return false;
 		return true;
 	}
-	
-	
-	@Override
-	public int getValue() {
-		return op.operate(lhs.getValue(), rhs.getValue());
-	}
-	
-	@Override
-	public String toString() {
-		return String.format("(%s %s %s)", lhs, op, rhs);
-	}
-	
-	
-	
-	
 }

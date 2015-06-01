@@ -2,7 +2,6 @@ package advanced.calculator.expression;
 
 public interface Expression {
 	
-	int getValue();
-	String toString();
+	<A> A accept(ExpressionVisitor<A> visitor);
 
 }

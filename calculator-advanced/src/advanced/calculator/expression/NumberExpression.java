@@ -1,22 +1,19 @@
 package advanced.calculator.expression;
 
-import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
-
-public class NumberExpression implements Expression{
+public class NumberExpression implements Expression {
 	private final int value;
 
 	public NumberExpression(int value) {
 		this.value = value;
 	}
 
-	@Override
 	public int getValue() {
 		return value;
 	}
-	
+
 	@Override
-	public String toString(){
-		return String.valueOf(value);
+	public <A> A accept(ExpressionVisitor<A> visitor) {
+		return visitor.visitNumber(this);
 	}
 
 	@Override
@@ -40,7 +37,4 @@ public class NumberExpression implements Expression{
 			return false;
 		return true;
 	}
-	
-	
-
 }
